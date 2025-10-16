@@ -87,7 +87,7 @@ const PopoverWithHover = ({
             <Popover.Arrow />
             <Popover.Body>
               <Text fontSize="sm" fontWeight="bold" color="blue.500" mb={2}>
-                Component Details
+                Component Details WITH STATE MANAGEMENT
               </Text>
               <Text fontSize="xs">ID: {componentData.componentId}</Text>
               <Text fontSize="xs">Type: {componentData.componentType}</Text>
