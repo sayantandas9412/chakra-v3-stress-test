@@ -17,7 +17,6 @@ import {
   Center,
   SimpleGrid,
   Popover,
-  Portal,
 } from "@chakra-ui/react";
 
 // Performance measurement utility
@@ -97,26 +96,24 @@ const PopoverWithState = ({
           </Card.Body>
         </Card.Root>
       </Popover.Trigger>
-      <Portal>
-        <Popover.Positioner>
-          <Popover.Content maxW="400px">
-            <Popover.Arrow />
-            <Popover.Body>
-              <Text fontSize="sm" fontWeight="bold" color="blue.500" mb={2}>
-                Component Details WITH STATE MANAGEMENT
-              </Text>
-              <Text fontSize="xs">ID: {componentData.componentId}</Text>
-              <Text fontSize="xs">Type: {componentData.componentType}</Text>
-              <Text fontSize="xs">
-                Optimized: {componentData.isOptimized ? "Yes" : "No"}
-              </Text>
-              <Text fontSize="xs" color="green.500">
-                Clicks: {clickCount} | Moves: {moveCount}
-              </Text>
-            </Popover.Body>
-          </Popover.Content>
-        </Popover.Positioner>
-      </Portal>
+      <Popover.Positioner>
+        <Popover.Content maxW="400px">
+          <Popover.Arrow />
+          <Popover.Body>
+            <Text fontSize="sm" fontWeight="bold" color="blue.500" mb={2}>
+              Component Details WITH STATE MANAGEMENT
+            </Text>
+            <Text fontSize="xs">ID: {componentData.componentId}</Text>
+            <Text fontSize="xs">Type: {componentData.componentType}</Text>
+            <Text fontSize="xs">
+              Optimized: {componentData.isOptimized ? "Yes" : "No"}
+            </Text>
+            <Text fontSize="xs" color="green.500">
+              Clicks: {clickCount} | Moves: {moveCount}
+            </Text>
+          </Popover.Body>
+        </Popover.Content>
+      </Popover.Positioner>
     </Popover.Root>
   );
 };
