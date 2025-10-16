@@ -164,13 +164,12 @@ const AutomatedPerformanceTest = ({
         );
         const allCards = document.querySelectorAll(".chakra-card");
         const actualCount = Math.max(componentElements.length, allCards.length);
-        const expectedCount = Math.min(selectedCount, 5000); // Apply safety limit
 
         console.log(
-          `Found ${actualCount} components, waiting for ${expectedCount}...`
+          `Found ${actualCount} components, waiting for ${selectedCount}...`
         );
 
-        if (actualCount >= expectedCount) {
+        if (actualCount >= selectedCount) {
           results.finalComponentCount = actualCount;
           resolve(true);
         } else {
@@ -258,13 +257,13 @@ const AutomatedPerformanceTest = ({
         🚀 Automated Performance Test
       </Heading>
 
-      <VStack align="start" gap={4}>
+      <VStack align="start" spacing={4}>
         {/* Component Count Selection */}
         <Box>
           <Text mb={2} fontWeight="bold">
             Select Component Count:
           </Text>
-          <HStack gap={2} wrap="wrap">
+          <HStack spacing={2} wrap="wrap">
             {[2000, 5000, 10000, 20000].map((count) => (
               <Button
                 key={count}
@@ -319,7 +318,7 @@ const AutomatedPerformanceTest = ({
               ✅ Test Results
             </Heading>
 
-            <VStack align="start" gap={2}>
+            <VStack align="start" spacing={2}>
               <Text fontSize="lg" fontWeight="bold" color="green.600">
                 <strong>Total Test Time:</strong>{" "}
                 {testResults.totalTime.toFixed(2)}ms
@@ -399,63 +398,60 @@ const ComponentFloodTest = ({
 
       <Text mb={4} fontSize="sm" color="gray.600">
         Total components: {componentCount} | Table:{" "}
-        {Math.ceil(Math.sqrt(Math.min(componentCount, 5000)))} rows ×{" "}
-        {Math.ceil(
-          Math.min(componentCount, 5000) /
-            Math.ceil(Math.sqrt(Math.min(componentCount, 5000)))
-        )}{" "}
+        {Math.ceil(Math.sqrt(componentCount))} rows ×{" "}
+        {Math.ceil(componentCount / Math.ceil(Math.sqrt(componentCount)))}{" "}
         columns
-        {componentCount > 5000 && (
-          <Text as="span" color="orange.500" ml={2}>
-            (Limited to 5000 for performance)
-          </Text>
-        )}
       </Text>
 
       <Box overflowX="auto" overflowY="auto">
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <tbody>
             {(() => {
-              // Calculate optimal grid dimensions with safety limits
-              const totalComponents = Math.min(componentCount, 5000); // Safety limit
-              const maxRows = Math.min(
-                Math.ceil(Math.sqrt(totalComponents)),
-                100
-              ); // Max 100 rows
+              // Calculate optimal grid dimensions
+              const totalComponents = componentCount;
+
+              // Calculate square root to get balanced dimensions
+              const sqrt = Math.sqrt(totalComponents);
+              const maxRows = Math.ceil(sqrt);
               const maxCols = Math.ceil(totalComponents / maxRows);
 
-              // Create rows with safety checks
-              const rows = [];
-              for (let rowIndex = 0; rowIndex < maxRows; rowIndex++) {
-                const cells = [];
-                for (let colIndex = 0; colIndex < maxCols; colIndex++) {
-                  const componentIndex = colIndex * maxRows + rowIndex;
+              // Create rows
+              return Array(maxRows)
+                .fill(0)
+                .map((_, rowIndex) => {
+                  return (
+                    <tr key={rowIndex}>
+                      {Array(maxCols)
+                        .fill(0)
+                        .map((_, colIndex) => {
+                          const componentIndex = colIndex * maxRows + rowIndex;
 
-                  if (componentIndex >= totalComponents) {
-                    cells.push(
-                      <td
-                        key={colIndex}
-                        style={{ padding: "4px", minWidth: "200px" }}
-                      ></td>
-                    );
-                  } else {
-                    const componentData = getComponentData(componentIndex);
-                    cells.push(
-                      <td
-                        key={colIndex}
-                        style={{ padding: "4px", minWidth: "200px" }}
-                      >
-                        <PopoverWithState
-                          componentData={componentData}
-                          index={componentIndex}
-                        />
-                      </td>
-                    );
-                  }
-                }
-                rows.push(<tr key={rowIndex}>{cells}</tr>);
-              }
-              return rows;
+                          if (componentIndex >= totalComponents) {
+                            return (
+                              <td
+                                key={colIndex}
+                                style={{ padding: "4px", minWidth: "200px" }}
+                              ></td>
+                            );
+                          }
+
+                          const componentData =
+                            getComponentData(componentIndex);
+                          return (
+                            <td
+                              key={colIndex}
+                              style={{ padding: "4px", minWidth: "200px" }}
+                            >
+                              <PopoverWithState
+                                componentData={componentData}
+                                index={componentIndex}
+                              />
+                            </td>
+                          );
+                        })}
+                    </tr>
+                  );
+                });
             })()}
           </tbody>
         </table>
@@ -556,7 +552,7 @@ export default function StressTestV3() {
           evaluate performance and responsiveness.
         </Text>
 
-        <HStack gap={2} mb={4}>
+        <HStack spacing={2} mb={4}>
           {tests.map((test) => (
             <Button
               key={test.id}
