@@ -257,13 +257,13 @@ const AutomatedPerformanceTest = ({
         🚀 Automated Performance Test
       </Heading>
 
-      <VStack align="start" spacing={4}>
+      <VStack align="start" gap={4}>
         {/* Component Count Selection */}
         <Box>
           <Text mb={2} fontWeight="bold">
             Select Component Count:
           </Text>
-          <HStack spacing={2} wrap="wrap">
+          <HStack gap={2} wrap="wrap">
             {[2000, 5000, 10000, 20000].map((count) => (
               <Button
                 key={count}
@@ -318,7 +318,7 @@ const AutomatedPerformanceTest = ({
               ✅ Test Results
             </Heading>
 
-            <VStack align="start" spacing={2}>
+            <VStack align="start" gap={2}>
               <Text fontSize="lg" fontWeight="bold" color="green.600">
                 <strong>Total Test Time:</strong>{" "}
                 {testResults.totalTime.toFixed(2)}ms
@@ -552,7 +552,7 @@ export default function StressTestV3() {
           evaluate performance and responsiveness.
         </Text>
 
-        <HStack spacing={2} mb={4}>
+        <HStack gap={2} mb={4}>
           {tests.map((test) => (
             <Button
               key={test.id}
