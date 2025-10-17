@@ -234,7 +234,6 @@ const AnimationComponent = ({ index }: { index: number }) => {
         <Box
           w="150px"
           h="150px"
-          bg="green.500"
           color="white"
           borderRadius="full"
           display="flex"
@@ -708,7 +707,7 @@ const UILibraryPerformanceTest = ({
                 ms
               </Text>
               <Text fontSize="sm" color="gray.600">
-                This tests Chakra UI v3's CSS-in-JS performance and styling
+                This tests Chakra UI v3&apos;s CSS-in-JS performance and styling
                 system
               </Text>
             </VStack>
