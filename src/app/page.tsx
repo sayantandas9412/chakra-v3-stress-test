@@ -985,10 +985,11 @@ const ComponentFloodTest = ({
     if (selectedType.id === "popover") {
       const componentData = getComponentData(index);
       return (
-        <selectedType.component componentData={componentData} index={index} />
+        <PopoverWithState componentData={componentData} index={index} />
       );
     } else {
-      return <selectedType.component index={index} />;
+      const Component = selectedType.component;
+      return <Component index={index} />;
     }
   };
 
