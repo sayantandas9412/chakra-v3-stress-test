@@ -312,9 +312,7 @@ const FormComponent = ({ index }: { index: number }) => {
               setIsInvalid(e.target.value.length < 3);
             }}
             placeholder="Type something..."
-            isInvalid={isInvalid}
-            errorBorderColor="red.500"
-            focusBorderColor="blue.500"
+            _invalid={{ borderColor: "red.500" }}
             _hover={{ borderColor: "gray.400" }}
             _focus={{ borderColor: "blue.500", shadow: "0 0 0 1px blue.500" }}
             data-testid="form-component"
