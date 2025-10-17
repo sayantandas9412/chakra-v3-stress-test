@@ -967,7 +967,7 @@ const ComponentFloodTest = ({
     { id: "animation", label: "Animation", component: AnimationComponent },
     { id: "form", label: "Form", component: FormComponent },
     { id: "popover", label: "Popover", component: PopoverWithState },
-  ];
+  ] as const;
 
   const addComponents = () => {
     const renderTime = measurePerformance(() => {
@@ -977,19 +977,20 @@ const ComponentFloodTest = ({
   };
 
   const getComponentToRender = (index: number) => {
-    const selectedType = componentTypes.find(
-      (t) => t.id === selectedComponentType
-    );
-    if (!selectedType) return null;
-
-    if (selectedType.id === "popover") {
-      const componentData = getComponentData(index);
-      return (
-        <PopoverWithState componentData={componentData} index={index} />
-      );
-    } else {
-      const Component = selectedType.component;
-      return <Component index={index} />;
+    switch (selectedComponentType) {
+      case "style-heavy":
+        return <StyleHeavyComponent index={index} />;
+      case "responsive":
+        return <ResponsiveComponent index={index} />;
+      case "animation":
+        return <AnimationComponent index={index} />;
+      case "form":
+        return <FormComponent index={index} />;
+      case "popover":
+        const componentData = getComponentData(index);
+        return <PopoverWithState componentData={componentData} index={index} />;
+      default:
+        return null;
     }
   };
 
